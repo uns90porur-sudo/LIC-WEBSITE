@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>R. Neelakandan - Digital Business Card</title>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Outfit:wght@600;800&display=swap" rel="stylesheet">
+    <!-- FontAwesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        :root {
+            --brand-blue: #003366;
+            --brand-gold: #FFD700;
+        }
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #001f3f, #003366);
+            color: white;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+        .vcard-container {
+            width: 100%;
+            max-width: 400px;
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 24px;
+            padding: 40px 30px;
+            text-align: center;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+            margin: 20px;
+        }
+        .profile-pic {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 4px solid var(--brand-gold);
+            margin-bottom: 20px;
+        }
+        h1 {
+            font-family: 'Outfit', sans-serif;
+            font-size: 1.8rem;
+            margin: 0 0 5px;
+            color: white;
+        }
+        .agent-code {
+            font-size: 0.9rem;
+            color: var(--brand-gold);
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+        p.tagline {
+            color: rgba(255,255,255,0.8);
+            font-size: 0.95rem;
+            margin-bottom: 30px;
+        }
+        .action-buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+        .btn-card {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            padding: 16px;
+            background: rgba(255,255,255,0.1);
+            border: 1px solid rgba(255,255,255,0.2);
+            color: white;
+            text-decoration: none;
+            border-radius: 12px;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+        .btn-card:hover {
+            background: rgba(255,255,255,0.2);
+            transform: translateY(-2px);
+        }
+        .btn-whatsapp { background: rgba(37, 211, 102, 0.15); border-color: rgba(37, 211, 102, 0.4); }
+        .btn-whatsapp:hover { background: rgba(37, 211, 102, 0.3); }
+        .btn-whatsapp i { color: #25D366; }
+        
+        .btn-call { background: rgba(0, 123, 255, 0.15); border-color: rgba(0, 123, 255, 0.4); }
+        .btn-call:hover { background: rgba(0, 123, 255, 0.3); }
+        .btn-call i { color: #007bff; }
+        
+        .btn-website { background: rgba(255, 215, 0, 0.15); border-color: rgba(255, 215, 0, 0.4); }
+        .btn-website:hover { background: rgba(255, 215, 0, 0.3); }
+        .btn-website i { color: var(--brand-gold); }
+
+        .footer {
+            margin-top: 30px;
+            font-size: 0.8rem;
+            color: rgba(255,255,255,0.5);
+        }
+    </style>
+</head>
+<body>
+
+    <div class="vcard-container">
+        <img src="profile.png" alt="R. Neelakandan" class="profile-pic" onerror="this.src='https://via.placeholder.com/120/003366/FFD700?text=RN'">
+        
+        <h1>R. Neelakandan</h1>
+        <div class="agent-code">LIC Agent Code: LIC0213471W</div>
+        <p class="tagline">Your Trusted Partner in Financial Planning & Life Insurance.</p>
+        
+        <div class="action-buttons">
+            <a href="https://wa.me/919444040525" class="btn-card btn-whatsapp" target="_blank">
+                <i class="fa-brands fa-whatsapp fa-xl"></i> Chat on WhatsApp
+            </a>
+            
+            <a href="tel:+919444040525" class="btn-card btn-call">
+                <i class="fa-solid fa-phone fa-xl"></i> Call Me
+            </a>
+            
+            <a href="index.html" class="btn-card btn-website">
+                <i class="fa-solid fa-globe fa-xl"></i> Visit My Website
+            </a>
+            
+            <a href="mailto:Uns90porur@gmail.com" class="btn-card">
+                <i class="fa-solid fa-envelope fa-xl"></i> Email Me
+            </a>
+        </div>
+        
+        <div class="footer">
+            &copy; 2026 R. Neelakandan.
+        </div>
+    </div>
+
+</body>
+</html>

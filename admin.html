@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LIC Agent Admin Portal - Pending Dues</title>
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;600;800&display=swap" rel="stylesheet">
+    <!-- FontAwesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <link rel="stylesheet" href="admin.css">
+    <!-- SheetJS for Excel Parsing -->
+    <script src="https://cdn.jsdelivr.net/npm/xlsx/dist/xlsx.full.min.js"></script>
+    <!-- Chart.js for Analytics -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- html2pdf for PDF Generation -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+</head>
+<body>
+    <!-- Login Screen -->
+    <div id="login-wrapper" class="login-wrapper">
+        <div class="login-box card">
+            <div class="login-header">
+                <i class="fa-solid fa-shield-halved fa-3x" style="color: var(--brand-gold); margin-bottom: 15px;"></i>
+                <h2>Admin Portal Login</h2>
+                <p>Please enter your credentials to access client data.</p>
+            </div>
+            <form id="login-form" class="login-form" onsubmit="event.preventDefault(); handleLogin();">
+                <div class="form-group">
+                    <label for="username"><i class="fa-solid fa-user"></i> Username</label>
+                    <input type="text" id="username" required placeholder="Enter username">
+                </div>
+                <div class="form-group" style="margin-bottom: 25px;">
+                    <label for="password"><i class="fa-solid fa-lock"></i> Password</label>
+                    <input type="password" id="password" required placeholder="Enter password">
+                </div>
+                <div id="login-error" class="login-error hidden">Incorrect username or password.</div>
+                <button type="submit" class="btn btn-primary" style="width: 100%;">Login to Dashboard <i class="fa-solid fa-arrow-right"></i></button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Main App Wrapper (Hidden initially) -->
+    <div id="app-wrapper" class="hidden" style="display: flex; height: 100vh; width: 100%;">
+        <div class="sidebar">
+            <div class="logo">
+                <i class="fa-solid fa-shield-halved"></i>
+                <span>Admin Portal</span>
+        </div>
+        <ul class="nav">
+            <li class="active"><a href="#"><i class="fa-solid fa-file-invoice-dollar"></i> Pending Dues</a></li>
+            <li><a href="#" onclick="clearData(); return false;" style="color: #ffcccc;"><i class="fa-solid fa-upload"></i> Update Excel List</a></li>
+            <li><a href="index.html"><i class="fa-solid fa-house"></i> View Live Site</a></li>
+            <li style="margin-top: auto; padding-top: 20px;"><a href="#" onclick="logout(); return false;" style="color: #ff4d4d;"><i class="fa-solid fa-lock"></i> Logout & Lock</a></li>
+        </ul>
+    </div>
+
+    <div class="main-content">
+        <header>
+            <h2>Pending Premium Dues Dashboard</h2>
+            <div class="agent-info">
+                <span id="cfg-agent-display"><i class="fa-solid fa-user-tie"></i> R. Neelakandan (LIC0213471W)</span>
+            </div>
+        </header>
+
+        <!-- Upload Section -->
+        <div class="upload-section card" id="upload-card">
+            <h3><i class="fa-solid fa-file-excel"></i> Load Client Data</h3>
+            <p>Select your <code>DETAILS.xlsx</code> file to instantly view pending dues. No data is uploaded to the internet.</p>
+            <div class="file-input-wrapper">
+                <input type="file" id="excel-file" accept=".xlsx, .xls">
+                <label for="excel-file" class="btn btn-primary"><i class="fa-solid fa-upload"></i> Choose Excel File</label>
+            </div>
+            <p id="file-name" class="file-name"></p>
+        </div>
+
+        <!-- Dashboard Content (Hidden initially) -->
+        <div id="dashboard-content" class="hidden">
+            <!-- Summary Cards -->
+            <div class="summary-cards">
+                <div class="card summary-card">
+                    <div class="card-icon blue"><i class="fa-solid fa-users"></i></div>
+                    <div class="card-info">
+                        <h4>Total Pending Policies</h4>
+                        <h2 id="total-policies">0</h2>
+                    </div>
+                </div>
+                <div class="card summary-card">
+                    <div class="card-icon red"><i class="fa-solid fa-indian-rupee-sign"></i></div>
+                    <div class="card-info">
+                        <h4>Total Premium Due</h4>
+                        <h2 id="total-premium">₹0</h2>
+                    </div>
+                </div>
+                <div class="card summary-card">
+                    <div class="card-icon green"><i class="fa-solid fa-chart-line"></i></div>
+                    <div class="card-info">
+                        <h4>Estimated Commission</h4>
+                        <h2 id="total-commission">₹0</h2>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Analytics Chart Section -->
+            <div class="card" id="analytics-section" style="margin-bottom: 30px;">
+                <h3 style="margin-bottom: 20px;"><i class="fa-solid fa-chart-pie text-brand"></i> Commission Analytics</h3>
+                <div style="position: relative; height: 300px; width: 100%;">
+                    <canvas id="commissionChart"></canvas>
+                </div>
+            </div>
+
+            <!-- Upcoming Birthdays Section (Hidden initially) -->
+            <div class="card table-container hidden" id="birthdays-section" style="margin-bottom: 30px; border-top: 4px solid #FFD700;">
+                <div class="table-header">
+                    <h3><i class="fa-solid fa-cake-candles" style="color: #FFD700;"></i> Upcoming Birthdays</h3>
+                </div>
+                <div class="table-responsive">
+                    <table id="birthdays-table">
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Date of Birth</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody id="birthdays-table-body">
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Data Table Section -->
+            <div class="card table-container">
+                <div class="table-header" style="flex-direction: column; align-items: stretch; gap: 15px;">
+                    <div style="display: flex; justify-content: space-between; align-items: center; width: 100%;">
+                        <h3>Client Due List</h3>
+                        <button class="btn" style="background: none; border: 2px solid var(--brand-blue); color: var(--brand-blue); padding: 8px 15px; cursor: pointer; border-radius: 6px; font-weight: 600;" onclick="window.print()"><i class="fa-solid fa-print"></i> Print</button>
+                    </div>
+                    
+                    <div class="filter-controls" style="display: flex; gap: 15px; flex-wrap: wrap; background: var(--bg-main); padding: 15px; border-radius: 8px; border: 1px solid var(--border-color);">
+                        <div class="search-box" style="flex: 1; min-width: 250px;">
+                            <i class="fa-solid fa-search"></i>
+                            <input type="text" id="search-input" placeholder="Search name or policy...">
+                        </div>
+                        <select id="filter-month" style="padding: 10px 15px; border-radius: 6px; border: 1px solid var(--border-color); outline: none; font-family: inherit; color: var(--text-main); background: white;">
+                            <option value="all">All Months</option>
+                            <option value="01">January</option>
+                            <option value="02">February</option>
+                            <option value="03">March</option>
+                            <option value="04">April</option>
+                            <option value="05">May</option>
+                            <option value="06">June</option>
+                            <option value="07">July</option>
+                            <option value="08">August</option>
+                            <option value="09">September</option>
+                            <option value="10">October</option>
+                            <option value="11">November</option>
+                            <option value="12">December</option>
+                        </select>
+                        <select id="sort-by" style="padding: 10px 15px; border-radius: 6px; border: 1px solid var(--border-color); outline: none; font-family: inherit; color: var(--text-main); background: white;">
+                            <option value="default">Default Sort</option>
+                            <option value="prem-desc">Premium: High to Low</option>
+                            <option value="prem-asc">Premium: Low to High</option>
+                            <option value="name-asc">Name: A to Z</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <div class="table-responsive">
+                    <table id="dues-table">
+                        <thead>
+                            <tr>
+                                <th>S.No</th>
+                                <th>Name of Assured</th>
+                                <th>Policies Count</th>
+                                <th>Policy Numbers</th>
+                                <th>Total Prem</th>
+                                <th>Est. Com</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody id="table-body">
+                            <!-- Data will be populated here -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Hidden PDF Notice Template -->
+    <div id="pdf-notice" class="hidden" style="padding: 40px; font-family: 'Inter', sans-serif;">
+        <div style="text-align: center; margin-bottom: 40px; border-bottom: 2px solid var(--brand-blue); padding-bottom: 20px;">
+            <h1 style="color: var(--brand-blue); font-family: 'Outfit', sans-serif; margin-bottom: 10px;">LIC PREMIUM DUE NOTICE</h1>
+            <h3 style="color: var(--text-muted);">From the Desk of <span id="cfg-pdf-agent-name">R. Neelakandan</span></h3>
+            <p><strong>LIC Agent Code:</strong> <span id="cfg-pdf-agent-code">LIC0213471W</span> | <strong>Phone:</strong> <span id="cfg-pdf-agent-phone">+91 9444040525</span></p>
+        </div>
+        
+        <div style="margin-bottom: 30px;">
+            <h2 id="pdf-client-name" style="margin-bottom: 10px;"></h2>
+            <p>Dear Valued Client,</p>
+            <p>This is a gentle reminder that the premium for your Life Insurance Corporation (LIC) policies is due. Ensuring timely payment helps keep your policy active and your family protected.</p>
+        </div>
+        
+        <table style="width: 100%; border-collapse: collapse; margin-bottom: 30px;">
+            <thead>
+                <tr style="background-color: var(--bg-light);">
+                    <th style="padding: 12px; border: 1px solid #ccc; text-align: left;">Policy Number</th>
+                    <th style="padding: 12px; border: 1px solid #ccc; text-align: right;">Premium Amount</th>
+                </tr>
+            </thead>
+            <tbody id="pdf-policy-list">
+            </tbody>
+            <tfoot>
+                <tr>
+                    <td style="padding: 12px; border: 1px solid #ccc; font-weight: bold; text-align: right;">Total Amount Due:</td>
+                    <td id="pdf-total-amount" style="padding: 12px; border: 1px solid #ccc; font-weight: bold; color: var(--brand-blue); text-align: right;"></td>
+                </tr>
+            </tfoot>
+        </table>
+        
+        <div style="margin-top: 50px;">
+            <p><strong>Payment Instructions:</strong></p>
+            <p>You can pay via the LIC Customer Portal, PayTM, Google Pay, or directly to your agent. Please contact me if you need assistance with the payment process.</p>
+            <br><br>
+            <p>Thank you for choosing LIC of India.</p>
+            <br><br>
+            <p><strong>Authorized Signatory</strong></p>
+            <p id="cfg-pdf-agent-sign">R. Neelakandan</p>
+        </div>
+    </div>
+    
+    </div> <!-- End Main App Wrapper -->
+
+    <!-- Client Profile Modal -->
+    <div id="client-modal" class="modal-overlay hidden">
+        <div class="modal-card">
+            <div class="modal-header">
+                <h2 id="modal-client-name">Client Name</h2>
+                <button class="btn-close" onclick="closeClientModal()"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+            <div class="modal-body">
+                <div class="modal-summary">
+                    <div class="summary-item">
+                        <span>Date of Birth</span>
+                        <strong id="modal-client-dob">-</strong>
+                    </div>
+                    <div class="summary-item">
+                        <span>Total Premium Due</span>
+                        <strong id="modal-client-total" class="text-red">-</strong>
+                    </div>
+                </div>
+                
+                <h3>Policy Breakdown</h3>
+                <table style="width: 100%; border-collapse: collapse; margin-top: 15px;">
+                    <thead>
+                        <tr style="background-color: #f4f7fb; text-align: left;">
+                            <th style="padding: 10px; border-bottom: 2px solid #e2e8f0;">Policy Number</th>
+                            <th style="padding: 10px; border-bottom: 2px solid #e2e8f0; text-align: right;">Premium (₹)</th>
+                        </tr>
+                    </thead>
+                    <tbody id="modal-policy-list">
+                    </tbody>
+                </table>
+            </div>
+            <div class="modal-footer">
+                <a id="modal-whatsapp-btn" href="#" target="_blank" class="btn" style="background-color: #25D366; color: white; display: inline-flex; align-items: center; gap: 8px;">
+                    <i class="fa-brands fa-whatsapp"></i> Send WhatsApp Reminder
+                </a>
+            </div>
+        </div>
+    </div>
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
+    <script src="config.js"></script>
+    <script src="admin.js"></script>
+</body>
+</html>

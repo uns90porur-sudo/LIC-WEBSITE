@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>R. Neelakandan - Premium LIC Advisor</title>
+    <meta name="description" content="Secure your family's future with R. Neelakandan, authorized LIC Agent. Get personalized life insurance, term plans, and investment solutions.">
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;600;800&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="styles.css">
+    <!-- FontAwesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+
+    <!-- Navigation -->
+    <nav class="navbar" id="navbar">
+        <div class="container nav-container">
+            <a href="#" class="logo">
+                <span class="logo-icon"><i class="fa-solid fa-shield-halved"></i></span>
+                <span class="logo-text">R. Neelakandan<br><small>LIC Agent - LIC0213471W</small></span>
+            </a>
+            <ul class="nav-links">
+                <li><a href="#home">Home</a></li>
+                <li><a href="#about">About Me</a></li>
+                <li><a href="#services">Plans</a></li>
+                <li><a href="#calculator">Premium Calculator</a></li>
+                <li><a href="#contact" class="btn-primary-small">Contact</a></li>
+                <li><a href="admin.html" class="admin-link"><i class="fa-solid fa-lock"></i> Admin</a></li>
+            </ul>
+            <div class="mobile-menu-toggle">
+                <i class="fa-solid fa-bars"></i>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero">
+        <div class="hero-bg"></div>
+        <div class="container hero-content">
+            <div class="hero-text fade-in-up">
+                <div class="badge">Official LIC Advisor</div>
+                <h1>Secure Your Family's <span class="text-gradient">Future Today.</span></h1>
+                <p>Life is unpredictable, but your family's financial security shouldn't be. Get trusted advice and customized LIC plans tailored to your life goals.</p>
+                <div class="hero-buttons">
+                    <a href="#calculator" class="btn btn-primary">Get a Free Quote <i class="fa-solid fa-arrow-right"></i></a>
+                    <a href="#services" class="btn btn-secondary">Explore Plans</a>
+                </div>
+                <div class="trust-indicators">
+                    <span><i class="fa-solid fa-check-circle"></i> 100% Claim Settlement Focus</span>
+                    <span><i class="fa-solid fa-user-shield"></i> Government Backed</span>
+                </div>
+            </div>
+            <div class="hero-image fade-in-up delay-1">
+                <div class="agent-photo">
+                    <img src="profile.jpg" alt="R. Neelakandan" class="agent-profile-img">
+                </div>
+                <div class="floating-card glassmorphism">
+                    <i class="fa-solid fa-star text-gold"></i>
+                    <div>
+                        <strong>Trusted Advisor</strong>
+                        <span>Code: LIC0213471W</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="about section-padding">
+        <div class="container about-container">
+            <div class="about-image fade-in-up">
+                <img src="consultation.png" alt="Consultation" class="rounded-image shadow-lg">
+                <div class="experience-badge">
+                    <span class="number">Expert</span>
+                    <span>Advice</span>
+                </div>
+            </div>
+            <div class="about-text fade-in-up delay-1">
+                <h2>About <span class="text-brand">R. Neelakandan</span></h2>
+                <h3>Your Partner in Financial Planning</h3>
+                <p>As an authorized agent for the Life Insurance Corporation of India (LIC), my mission is to help individuals and families achieve financial peace of mind. I specialize in understanding your unique life circumstances and recommending the perfect mix of term, endowment, and health plans.</p>
+                <p>I don't just sell policies; I build lifelong relationships based on trust, transparency, and prompt service—especially when you need it the most during claim settlements.</p>
+                <ul class="about-features">
+                    <li><i class="fa-solid fa-check text-brand"></i> Personalized Portfolio Review</li>
+                    <li><i class="fa-solid fa-check text-brand"></i> Doorstep & Digital Service</li>
+                    <li><i class="fa-solid fa-check text-brand"></i> End-to-End Claim Assistance</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- Interactive Quiz Section -->
+    <section id="quiz" class="quiz section-padding" style="background-color: var(--brand-blue-dark); color: white;">
+        <div class="container text-center fade-in-up">
+            <h2 style="color: white;">Find the Right <span class="text-gold">LIC Plan</span></h2>
+            <p style="color: rgba(255,255,255,0.8); max-width: 600px; margin: 0 auto 40px;">Not sure which policy is best for you? Tell us your primary financial goal and we'll instantly recommend the perfect plan.</p>
+            
+            <div class="quiz-container glassmorphism" style="max-width: 800px; margin: 0 auto; padding: 40px; border-radius: var(--border-radius);">
+                <div id="quiz-question">
+                    <h3 style="color: white; margin-bottom: 30px;">What is your main financial goal?</h3>
+                    <div class="quiz-options" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px;">
+                        <button class="btn btn-secondary quiz-btn" onclick="showQuizResult('child')" style="color: white; border-color: rgba(255,255,255,0.3);">👦 Child's Education / Marriage</button>
+                        <button class="btn btn-secondary quiz-btn" onclick="showQuizResult('retirement')" style="color: white; border-color: rgba(255,255,255,0.3);">🏖️ Peaceful Retirement</button>
+                        <button class="btn btn-secondary quiz-btn" onclick="showQuizResult('protection')" style="color: white; border-color: rgba(255,255,255,0.3);">🛡️ Pure Family Protection</button>
+                        <button class="btn btn-secondary quiz-btn" onclick="showQuizResult('savings')" style="color: white; border-color: rgba(255,255,255,0.3);">💰 Wealth Creation & Tax Saving</button>
+                    </div>
+                </div>
+                
+                <div id="quiz-result" class="hidden" style="margin-top: 20px;">
+                    <div style="font-size: 3rem; margin-bottom: 20px;" id="result-icon">🎯</div>
+                    <h3 class="text-gold" id="result-title" style="margin-bottom: 15px;">Recommended Plan</h3>
+                    <p id="result-desc" style="color: rgba(255,255,255,0.9); margin-bottom: 30px; font-size: 1.1rem;"></p>
+                    <div style="display: flex; gap: 15px; justify-content: center;">
+                        <a href="#" target="_blank" class="btn btn-primary-small cfg-whatsapp-link" style="background-color: #25D366; color: white !important;"><i class="fa-brands fa-whatsapp"></i> Discuss on WhatsApp</a>
+                        <button class="btn btn-secondary" onclick="resetQuiz()" style="color: white; border-color: white;">Start Over</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services / Plans Section -->
+    <section id="services" class="services section-padding bg-light">
+        <div class="container">
+            <div class="section-header text-center fade-in-up">
+                <h2>Our <span class="text-brand">Insurance Plans</span></h2>
+                <p>Comprehensive coverage options designed for every stage of your life.</p>
+            </div>
+            
+            <div class="services-grid">
+                <!-- Plan Card 1 -->
+                <div class="service-card glassmorphism fade-in-up">
+                    <div class="card-icon"><i class="fa-solid fa-umbrella"></i></div>
+                    <h3>Term Assurance</h3>
+                    <p>High life cover at an affordable premium to ensure your family's financial independence in your absence.</p>
+                    <a href="#contact" class="card-link">Know More <i class="fa-solid fa-angle-right"></i></a>
+                </div>
+                
+                <!-- Plan Card 2 -->
+                <div class="service-card glassmorphism fade-in-up delay-1">
+                    <div class="card-icon"><i class="fa-solid fa-piggy-bank"></i></div>
+                    <h3>Endowment Plans</h3>
+                    <p>A perfect combination of protection and savings. Build a corpus for future needs while staying insured.</p>
+                    <a href="#contact" class="card-link">Know More <i class="fa-solid fa-angle-right"></i></a>
+                </div>
+
+                <!-- Plan Card 3 -->
+                <div class="service-card glassmorphism fade-in-up delay-2">
+                    <div class="card-icon"><i class="fa-solid fa-child-reaching"></i></div>
+                    <h3>Child Plans</h3>
+                    <p>Secure your child's education and marriage expenses. Guaranteed payouts at crucial milestones.</p>
+                    <a href="#contact" class="card-link">Know More <i class="fa-solid fa-angle-right"></i></a>
+                </div>
+
+                <!-- Plan Card 4 -->
+                <div class="service-card glassmorphism fade-in-up">
+                    <div class="card-icon"><i class="fa-solid fa-wheelchair"></i></div>
+                    <h3>Retirement & Pension</h3>
+                    <p>Plan your retirement today to live a life of dignity tomorrow with regular pension payouts.</p>
+                    <a href="#contact" class="card-link">Know More <i class="fa-solid fa-angle-right"></i></a>
+                </div>
+
+                <!-- Plan Card 5 -->
+                <div class="service-card glassmorphism fade-in-up delay-1">
+                    <div class="card-icon"><i class="fa-solid fa-heart-pulse"></i></div>
+                    <h3>Health Insurance</h3>
+                    <p>Protect your savings from unexpected medical emergencies with comprehensive health cover.</p>
+                    <a href="#contact" class="card-link">Know More <i class="fa-solid fa-angle-right"></i></a>
+                </div>
+
+                <!-- Plan Card 6 -->
+                <div class="service-card glassmorphism fade-in-up delay-2">
+                    <div class="card-icon"><i class="fa-solid fa-chart-line"></i></div>
+                    <h3>ULIPs</h3>
+                    <p>Market-linked plans that offer the dual benefit of investment growth and life insurance cover.</p>
+                    <a href="#contact" class="card-link">Know More <i class="fa-solid fa-angle-right"></i></a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Calculator Section -->
+    <section id="calculator" class="calculator section-padding">
+        <div class="container calculator-container glassmorphism fade-in-up">
+            <div class="calc-text">
+                <h2>Quick <span class="text-gold">Premium Estimate</span></h2>
+                <p>Enter a few details to get a basic estimate of your life insurance needs. For a detailed illustration, please contact me.</p>
+            </div>
+            <div class="calc-form">
+                <div class="form-group">
+                    <label for="age">Your Age (Years)</label>
+                    <input type="number" id="age" min="18" max="65" value="30">
+                </div>
+                <div class="form-group">
+                    <label for="cover">Desired Cover Amount (₹)</label>
+                    <select id="cover">
+                        <option value="1000000">10 Lakhs</option>
+                        <option value="2500000">25 Lakhs</option>
+                        <option value="5000000" selected>50 Lakhs</option>
+                        <option value="10000000">1 Crore</option>
+                    </select>
+                </div>
+                <button class="btn btn-primary w-100" onclick="calculatePremium()">Calculate</button>
+                <div id="calc-result" class="calc-result hidden">
+                    <h4>Estimated Annual Premium:</h4>
+                    <h2 id="premium-amount" class="text-gradient">₹0</h2>
+                    <p class="text-sm">*This is a rough estimate for a basic term plan. Actual premium depends on health, lifestyle, and plan choice.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials Section -->
+    <section id="testimonials" class="testimonials section-padding bg-light">
+        <div class="container">
+            <div class="section-header text-center fade-in-up">
+                <h2>What Our <span class="text-brand">Clients Say</span></h2>
+                <p>Don't just take my word for it. Read about the experiences of families I've helped protect.</p>
+            </div>
+            
+            <div class="testimonials-grid">
+                <div class="testimonial-card glassmorphism fade-in-up">
+                    <div class="quote-icon"><i class="fa-solid fa-quote-left"></i></div>
+                    <p class="testimonial-text">"Mr. Neelakandan helped my family get our maturity claim settled in just 3 days without any hassle. His dedication to his clients is unmatched. Highly recommended!"</p>
+                    <div class="client-info">
+                        <div class="client-avatar">
+                            <i class="fa-solid fa-user-circle"></i>
+                        </div>
+                        <div>
+                            <h4>Suresh Kumar</h4>
+                            <span class="text-sm">Client for 10 Years</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="testimonial-card glassmorphism fade-in-up delay-1">
+                    <div class="quote-icon"><i class="fa-solid fa-quote-left"></i></div>
+                    <p class="testimonial-text">"I was confused about which policy to take. He patiently explained all the options and helped me choose the perfect term plan for my budget. Truly an honest advisor."</p>
+                    <div class="client-info">
+                        <div class="client-avatar">
+                            <i class="fa-solid fa-user-circle"></i>
+                        </div>
+                        <div>
+                            <h4>Priya R.</h4>
+                            <span class="text-sm">IT Professional</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="testimonial-card glassmorphism fade-in-up delay-2">
+                    <div class="quote-icon"><i class="fa-solid fa-quote-left"></i></div>
+                    <p class="testimonial-text">"Excellent doorstep service. I never had to visit the LIC branch even once. He handles all the premium reminders and paperwork perfectly."</p>
+                    <div class="client-info">
+                        <div class="client-avatar">
+                            <i class="fa-solid fa-user-circle"></i>
+                        </div>
+                        <div>
+                            <h4>V. Vasudevan</h4>
+                            <span class="text-sm">Business Owner</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="contact section-padding">
+        <div class="container">
+            <div class="section-header text-center fade-in-up">
+                <h2>Get in <span class="text-brand">Touch</span></h2>
+                <p>Have questions about your existing policy or want to buy a new one? I'm here to help.</p>
+            </div>
+            
+            <div class="contact-grid">
+                <div class="contact-info fade-in-up">
+                    <div class="info-item">
+                        <div class="info-icon"><i class="fa-solid fa-user"></i></div>
+                        <div>
+                            <h4>Agent Details</h4>
+                            <p>R. Neelakandan<br>LIC Agent Code: LIC0213471W</p>
+                        </div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-icon"><i class="fa-solid fa-phone"></i></div>
+                        <div>
+                            <h4>Call Me</h4>
+                            <p>+91 94440 40525<br><small>Mon-Sat, 9AM to 7PM</small></p>
+                        </div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-icon"><i class="fa-brands fa-whatsapp"></i></div>
+                        <div>
+                            <h4>WhatsApp</h4>
+                            <p>Chat directly with me for quick replies.</p>
+                            <a href="#" target="_blank" class="whatsapp-link cfg-whatsapp-link">Chat on WhatsApp</a>
+                        </div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-icon"><i class="fa-solid fa-link"></i></div>
+                        <div>
+                            <h4>LIC Portal</h4>
+                            <a href="https://licindia.in/" target="_blank" class="external-link">Pay Premium Online (Official)</a>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="contact-form fade-in-up delay-1">
+                    <form action="https://formsubmit.co/Uns90porur@gmail.com" method="POST">
+                        <!-- Honeypot & Config -->
+                        <input type="text" name="_honey" style="display:none">
+                        <input type="hidden" name="_captcha" value="false">
+                        <input type="hidden" name="_subject" value="New LIC Lead from Website!">
+                        
+                        <h3>Request a Call Back</h3>
+                        <div class="form-group">
+                            <input type="text" name="name" placeholder="Your Name" required>
+                        </div>
+                        <div class="form-group">
+                            <input type="tel" name="phone" placeholder="Phone Number" required>
+                        </div>
+                        <div class="form-group">
+                            <select name="interest" required>
+                                <option value="" disabled selected>Interested In...</option>
+                                <option value="term">Term Insurance</option>
+                                <option value="endowment">Endowment / Savings</option>
+                                <option value="child">Child Plan</option>
+                                <option value="health">Health Insurance</option>
+                                <option value="other">Other / Existing Policy Inquiry</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <textarea name="message" placeholder="Your Message (Optional)" rows="4"></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary w-100">Submit Request via Email</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container footer-content">
+            <div class="footer-brand">
+                <h3>R. Neelakandan</h3>
+                <p>Your Trusted LIC Advisor.</p>
+            </div>
+            <div class="footer-links">
+                <a href="#home">Home</a>
+                <a href="#about">About</a>
+                <a href="#services">Plans</a>
+                <a href="#contact">Contact</a>
+                <a href="admin.html">Admin Login</a>
+            </div>
+            <div class="footer-social">
+                <a href="#"><i class="fa-brands fa-facebook"></i></a>
+                <a href="#"><i class="fa-brands fa-twitter"></i></a>
+                <a href="#"><i class="fa-brands fa-linkedin"></i></a>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2026 R. Neelakandan - LIC Agent. All Rights Reserved. Not the official LIC website.</p>
+        </div>
+    </footer>
+
+    <!-- Floating WhatsApp Widget -->
+    <a href="#" class="floating-whatsapp cfg-whatsapp-link" target="_blank">
+        <i class="fa-brands fa-whatsapp"></i>
+    </a>
+
+    <script src="config.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
