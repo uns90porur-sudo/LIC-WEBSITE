@@ -11,6 +11,38 @@
     --font-heading: 'Outfit', sans-serif;
 }
 
+body.dark-mode {
+    --bg-main: #0f172a;
+    --bg-card: #1e293b;
+    --text-main: #f1f5f9;
+    --text-muted: #94a3b8;
+    --border-color: #334155;
+}
+
+body.dark-mode table th {
+    background-color: #1e293b !important;
+    color: #cbd5e1;
+}
+
+body.dark-mode tbody tr:hover {
+    background-color: #334155;
+}
+
+body.dark-mode .modal-card, 
+body.dark-mode .login-box {
+    background: var(--bg-card);
+}
+
+body.dark-mode .modal-header {
+    background: var(--brand-blue-dark);
+}
+
+body.dark-mode .modal-summary, 
+body.dark-mode .modal-footer {
+    background: #0f172a;
+    border-color: var(--border-color);
+}
+
 * {
     margin: 0;
     padding: 0;

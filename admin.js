@@ -1,12 +1,42 @@
 // Global array to hold the parsed Excel data
 let excelData = [];
 
+let currentQuickFilter = 'all';
+
 document.getElementById('excel-file').addEventListener('change', handleFile, false);
 document.getElementById('search-input').addEventListener('input', applyFilters, false);
 document.getElementById('filter-month').addEventListener('change', applyFilters, false);
 document.getElementById('sort-by').addEventListener('change', applyFilters, false);
 
+document.querySelectorAll('.quick-filter-btn').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+        document.querySelectorAll('.quick-filter-btn').forEach(b => {
+            b.style.background = 'transparent';
+            b.style.color = 'var(--text-main)';
+            b.style.border = '1px solid var(--border-color)';
+        });
+        e.target.style.background = 'var(--brand-blue)';
+        e.target.style.color = 'white';
+        e.target.style.border = 'none';
+        
+        currentQuickFilter = e.target.getAttribute('data-filter');
+        applyFilters();
+    });
+});
+
+document.getElementById('dark-mode-toggle').addEventListener('click', () => {
+    document.body.classList.toggle('dark-mode');
+    const isDark = document.body.classList.contains('dark-mode');
+    localStorage.setItem('darkMode', isDark);
+    document.getElementById('dark-mode-toggle').innerHTML = isDark ? '<i class="fa-solid fa-sun"></i> Light Mode' : '<i class="fa-solid fa-moon"></i> Dark Mode';
+});
+
 window.addEventListener('DOMContentLoaded', () => {
+    if (localStorage.getItem('darkMode') === 'true') {
+        document.body.classList.add('dark-mode');
+        document.getElementById('dark-mode-toggle').innerHTML = '<i class="fa-solid fa-sun"></i> Light Mode';
+    }
+
     if (typeof AGENT_CONFIG !== 'undefined') {
         document.getElementById('cfg-agent-display').innerHTML = `<i class="fa-solid fa-user-tie"></i> ${AGENT_CONFIG.name} (${AGENT_CONFIG.agentCode})`;
         document.getElementById('cfg-pdf-agent-name').textContent = AGENT_CONFIG.name;
@@ -313,7 +343,19 @@ function applyFilters() {
             monthMatch = row.dueMonths.includes(filterMonth);
         }
         
-        return searchMatch && monthMatch;
+        let quickMatch = true;
+        if (currentQuickFilter !== 'all') {
+            const today = new Date();
+            const thisMonth = (today.getMonth() + 1).toString().padStart(2, '0');
+            
+            if (currentQuickFilter === 'overdue') {
+                quickMatch = row.dueMonths.some(m => parseInt(m) < parseInt(thisMonth));
+            } else if (currentQuickFilter === 'due-today' || currentQuickFilter === 'due-7days') {
+                quickMatch = row.dueMonths.includes(thisMonth);
+            }
+        }
+        
+        return searchMatch && monthMatch && quickMatch;
     });
     
     // 2. Sort
@@ -633,4 +675,31 @@ function closeClientModal() {
     const modal = document.getElementById('client-modal');
     modal.classList.add('hidden');
     modal.style.pointerEvents = 'none';
+}
+
+function exportToCSV() {
+    if (excelData.length === 0) {
+        alert("No data available to export.");
+        return;
+    }
+    
+    let csvContent = "data:text/csv;charset=utf-8,";
+    csvContent += "Name,Policies Count,Policy Numbers,Total Premium,Estimated Commission\n";
+    
+    excelData.forEach(row => {
+        const name = `"${row.name}"`;
+        const count = row.count;
+        const pNos = `"${row.policyNumbers.join('; ')}"`;
+        const prem = row.totalPrem;
+        const comm = row.totalCom;
+        csvContent += `${name},${count},${pNos},${prem},${comm}\n`;
+    });
+    
+    const encodedUri = encodeURI(csvContent);
+    const link = document.createElement("a");
+    link.setAttribute("href", encodedUri);
+    link.setAttribute("download", "LIC_Pending_Dues.csv");
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
 }

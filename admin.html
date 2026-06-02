@@ -53,6 +53,7 @@
             <li class="active"><a href="#"><i class="fa-solid fa-file-invoice-dollar"></i> Pending Dues</a></li>
             <li><a href="#" onclick="clearData(); return false;" style="color: #ffcccc;"><i class="fa-solid fa-upload"></i> Update Excel List</a></li>
             <li><a href="index.html"><i class="fa-solid fa-house"></i> View Live Site</a></li>
+            <li><a href="#" id="dark-mode-toggle"><i class="fa-solid fa-moon"></i> Dark Mode</a></li>
             <li style="margin-top: auto; padding-top: 20px;"><a href="#" onclick="logout(); return false;" style="color: #ff4d4d;"><i class="fa-solid fa-lock"></i> Logout & Lock</a></li>
         </ul>
     </div>
@@ -165,6 +166,14 @@
                             <option value="prem-asc">Premium: Low to High</option>
                             <option value="name-asc">Name: A to Z</option>
                         </select>
+                    </div>
+                    
+                    <div class="quick-filters" style="display: flex; gap: 10px; margin-top: 15px; flex-wrap: wrap;">
+                        <button class="quick-filter-btn" data-filter="all" style="padding: 6px 12px; font-size: 0.85rem; background: var(--brand-blue); color: white; border: none; border-radius: 4px; cursor: pointer;">All</button>
+                        <button class="quick-filter-btn" data-filter="overdue" style="padding: 6px 12px; font-size: 0.85rem; background: transparent; color: var(--text-main); border: 1px solid var(--border-color); border-radius: 4px; cursor: pointer;">Overdue</button>
+                        <button class="quick-filter-btn" data-filter="due-today" style="padding: 6px 12px; font-size: 0.85rem; background: transparent; color: var(--text-main); border: 1px solid var(--border-color); border-radius: 4px; cursor: pointer;">Due Today</button>
+                        <button class="quick-filter-btn" data-filter="due-7days" style="padding: 6px 12px; font-size: 0.85rem; background: transparent; color: var(--text-main); border: 1px solid var(--border-color); border-radius: 4px; cursor: pointer;">Due in 7 Days</button>
+                        <button onclick="exportToCSV()" style="padding: 6px 12px; font-size: 0.85rem; margin-left: auto; background-color: #28a745; color: white; border-radius: 4px; border: none; cursor: pointer;"><i class="fa-solid fa-file-csv"></i> Export CSV</button>
                     </div>
                 </div>
                 
