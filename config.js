@@ -7,13 +7,12 @@ const AGENT_CONFIG = {
     whatsappNumber: "919444040525"
 };
 
-// FIREBASE CONFIGURATION
-// TODO: Create a free Firebase project and paste the config here to enable Cloud Sync across devices
-const FIREBASE_CONFIG = {
+// MONGODB CONFIGURATION
+// TODO: Create a free MongoDB Atlas cluster, enable the Data API, and paste the config here
+const MONGO_CONFIG = {
+    dataApiUrl: "YOUR_DATA_API_URL", // e.g., https://data.mongodb-api.com/app/data-xxxxx/endpoint/data/v1
     apiKey: "YOUR_API_KEY",
-    authDomain: "YOUR_PROJECT_ID.firebaseapp.com",
-    projectId: "YOUR_PROJECT_ID",
-    storageBucket: "YOUR_PROJECT_ID.appspot.com",
-    messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
-    appId: "YOUR_APP_ID"
+    dataSource: "Cluster0",
+    database: "lic_database",
+    collection: "dashboard"
 };
