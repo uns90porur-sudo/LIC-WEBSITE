@@ -178,39 +178,24 @@ function saveDashboardData(totalPolicies, totalPremium, totalCommission) {
         // Encrypt the data using the current password
         const encrypted = CryptoJS.AES.encrypt(jsonStr, currentCryptoKey).toString();
         
-        if (typeof MONGO_CONFIG !== 'undefined' && MONGO_CONFIG.apiKey !== "YOUR_API_KEY") {
-            const payload = {
-                dataSource: MONGO_CONFIG.dataSource,
-                database: MONGO_CONFIG.database,
-                collection: MONGO_CONFIG.collection,
-                filter: { _id: "dashboard" },
-                update: {
-                    $set: {
-                        _id: "dashboard",
-                        payload: encrypted,
-                        updatedAt: new Date().toISOString()
-                    }
-                },
-                upsert: true
-            };
-            
-            fetch(`${MONGO_CONFIG.dataApiUrl}/action/updateOne`, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'api-key': MONGO_CONFIG.apiKey
-                },
-                body: JSON.stringify(payload)
-            }).then(response => response.json())
-              .then(data => {
+        fetch('/api/saveData', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ payload: encrypted })
+        }).then(response => response.json())
+          .then(data => {
+              if (data.success) {
                   console.log("Data securely synced to MongoDB.");
-              }).catch(err => {
-                  console.error("MongoDB sync error:", err);
+              } else {
+                  console.error("Backend error:", data.error);
                   localStorage.setItem('licDashboardData', encrypted);
-              });
-        } else {
-            localStorage.setItem('licDashboardData', encrypted);
-        }
+              }
+          }).catch(err => {
+              console.error("MongoDB sync error:", err);
+              localStorage.setItem('licDashboardData', encrypted);
+          });
     } catch (e) {
         console.error("Local storage error:", e);
     }
@@ -514,43 +499,27 @@ function processEncryptedData(decryptedData) {
 }
 
 function loadFromDatabase(key) {
-    if (typeof MONGO_CONFIG !== 'undefined' && MONGO_CONFIG.apiKey !== "YOUR_API_KEY") {
-        const payload = {
-            dataSource: MONGO_CONFIG.dataSource,
-            database: MONGO_CONFIG.database,
-            collection: MONGO_CONFIG.collection,
-            filter: { _id: "dashboard" }
-        };
-        
-        fetch(`${MONGO_CONFIG.dataApiUrl}/action/findOne`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'api-key': MONGO_CONFIG.apiKey
-            },
-            body: JSON.stringify(payload)
-        }).then(response => response.json())
-          .then(data => {
-              if (data.document) {
-                  try {
-                      const encrypted = data.document.payload;
-                      const bytes = CryptoJS.AES.decrypt(encrypted, key);
-                      const decryptedData = bytes.toString(CryptoJS.enc.Utf8);
-                      if (!decryptedData) throw new Error("Decryption failed");
-                      processEncryptedData(decryptedData);
-                  } catch(e) {
-                      console.error("MongoDB data decryption failed. Incorrect password?", e);
-                  }
-              } else {
-                  loadFromLocalStorage(key);
+    fetch('/api/loadData', {
+        method: 'GET'
+    }).then(response => response.json())
+      .then(data => {
+          if (data.success && data.payload) {
+              try {
+                  const encrypted = data.payload;
+                  const bytes = CryptoJS.AES.decrypt(encrypted, key);
+                  const decryptedData = bytes.toString(CryptoJS.enc.Utf8);
+                  if (!decryptedData) throw new Error("Decryption failed");
+                  processEncryptedData(decryptedData);
+              } catch(e) {
+                  console.error("MongoDB data decryption failed. Incorrect password?", e);
               }
-          }).catch(err => {
-              console.error("Error fetching from MongoDB:", err);
+          } else {
               loadFromLocalStorage(key);
-          });
-    } else {
-        loadFromLocalStorage(key);
-    }
+          }
+      }).catch(err => {
+          console.error("Error fetching from MongoDB:", err);
+          loadFromLocalStorage(key);
+      });
 }
 
 function loadFromLocalStorage(key) {
@@ -572,22 +541,10 @@ function loadFromLocalStorage(key) {
 
 function clearData() {
     if (confirm('Are you sure you want to clear the current list and upload a new one?')) {
-        if (typeof MONGO_CONFIG !== 'undefined' && MONGO_CONFIG.apiKey !== "YOUR_API_KEY") {
-            const payload = {
-                dataSource: MONGO_CONFIG.dataSource,
-                database: MONGO_CONFIG.database,
-                collection: MONGO_CONFIG.collection,
-                filter: { _id: "dashboard" }
-            };
-            fetch(`${MONGO_CONFIG.dataApiUrl}/action/deleteOne`, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'api-key': MONGO_CONFIG.apiKey
-                },
-                body: JSON.stringify(payload)
-            }).catch(err => console.error("Error clearing MongoDB:", err));
-        }
+        fetch('/api/clearData', {
+            method: 'POST'
+        }).catch(err => console.error("Error clearing MongoDB:", err));
+        
         localStorage.removeItem('licDashboardData');
         excelData = [];
         

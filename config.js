@@ -7,12 +7,4 @@ const AGENT_CONFIG = {
     whatsappNumber: "919444040525"
 };
 
-// MONGODB CONFIGURATION
-// TODO: Create a free MongoDB Atlas cluster, enable the Data API, and paste the config here
-const MONGO_CONFIG = {
-    dataApiUrl: "YOUR_DATA_API_URL", // e.g., https://data.mongodb-api.com/app/data-xxxxx/endpoint/data/v1
-    apiKey: "YOUR_API_KEY",
-    dataSource: "Cluster0",
-    database: "lic_database",
-    collection: "dashboard"
-};
+// Backend connection is handled via Vercel Serverless Functions and Environment Variables.

@@ -1,0 +1,8 @@
+{
+  "name": "lic-website",
+  "version": "1.0.0",
+  "description": "LIC Agent Website with MongoDB Backend",
+  "dependencies": {
+    "mongodb": "^6.5.0"
+  }
+}
