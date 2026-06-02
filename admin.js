@@ -188,12 +188,15 @@ function saveDashboardData(totalPolicies, totalPremium, totalCommission) {
           .then(data => {
               if (data.success) {
                   console.log("Data securely synced to MongoDB.");
+                  alert("Success! Data synced to the cloud and available on all devices.");
               } else {
                   console.error("Backend error:", data.error);
+                  alert("Warning: Could not sync to cloud. Have you added MONGODB_URI to Vercel and redeployed?");
                   localStorage.setItem('licDashboardData', encrypted);
               }
           }).catch(err => {
               console.error("MongoDB sync error:", err);
+              alert("Warning: Could not connect to backend server. Saving locally only.");
               localStorage.setItem('licDashboardData', encrypted);
           });
     } catch (e) {
