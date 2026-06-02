@@ -21,9 +21,13 @@ body {
     font-family: var(--font-main);
     background-color: var(--bg-main);
     color: var(--text-main);
+    overflow: hidden;
+}
+
+.app-wrapper {
     display: flex;
     height: 100vh;
-    overflow: hidden;
+    width: 100%;
 }
 
 /* Sidebar */
@@ -513,4 +517,106 @@ tbody tr:hover {
 
 .clickable-name:hover {
     color: var(--brand-gold);
+}
+
+/* Responsive / Mobile Styles for Admin Portal */
+@media (max-width: 768px) {
+    body {
+        overflow-y: auto;
+    }
+    
+    .app-wrapper {
+        flex-direction: column;
+        height: auto;
+        min-height: 100vh;
+    }
+    
+    .sidebar {
+        width: 100%;
+        height: auto;
+        padding-bottom: 10px;
+    }
+    
+    .nav {
+        display: flex;
+        flex-wrap: wrap;
+        padding: 10px 0;
+    }
+    
+    .nav li {
+        flex: 1 1 50%;
+    }
+    
+    .nav li a {
+        padding: 12px 10px;
+        font-size: 0.85rem;
+        justify-content: center;
+        text-align: center;
+        border-left: none;
+        border-bottom: 3px solid transparent;
+        flex-direction: column;
+        gap: 5px;
+    }
+    
+    .nav li.active a, .nav li a:hover {
+        border-left: none;
+        border-bottom: 3px solid var(--brand-gold);
+    }
+    
+    .main-content {
+        padding: 15px;
+        overflow-y: visible;
+    }
+    
+    header {
+        flex-direction: column;
+        gap: 15px;
+        align-items: flex-start;
+        margin-bottom: 20px;
+    }
+    
+    header h2 {
+        font-size: 1.5rem;
+    }
+    
+    .agent-info {
+        width: 100%;
+        text-align: center;
+    }
+    
+    .summary-cards {
+        grid-template-columns: 1fr;
+        gap: 15px;
+    }
+    
+    .filter-controls {
+        flex-direction: column;
+        width: 100%;
+    }
+    
+    .search-box {
+        width: 100%;
+    }
+    
+    .upload-section {
+        padding: 30px 15px;
+    }
+    
+    .modal-card {
+        width: 95%;
+        max-height: 90vh;
+        overflow-y: auto;
+    }
+    
+    /* Improve table layout on mobile */
+    th, td {
+        padding: 10px 8px;
+        font-size: 0.85rem;
+    }
+    
+    .btn {
+        padding: 10px 15px;
+        width: 100%;
+        text-align: center;
+    }
 }
